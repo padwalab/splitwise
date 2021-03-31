@@ -1,0 +1,6 @@
+[submodule "splitwise-backend"]
+	path = splitwise-backend
+	url = https://github.com/padwalab/splitwise-backend.git
+[submodule "splitwise-frontend"]
+	path = splitwise-frontend
+	url = https://github.com/padwalab/splitwise-frontend.git
