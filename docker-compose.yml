@@ -15,6 +15,7 @@ services:
       - POSTGRES_PASSWORD=docker
       - POSTGRES_DB=splitwise-dev
       - DATABASE_HOST=splitwise-db
+      
     # volumes:
     #   - ./config/init_pg.sql:/docker-entrypoint-initdb.d/init_pg.sql
     expose:
@@ -23,39 +24,46 @@ services:
       - splitwise_net
     logging:
       driver: none
-  splitwise_backend:
-    container_name: splitwise_backend
-    build:
-      context: ./splitwise-backend
-      # dockerfile: ./splitwise-backend/Dockerfile
-    volumes:
-      - ./splitwise-backend:/usr/src/splitwise-backend
+  splitwise-mongo:
+    container_name: spitwise-mongo
+    image: mongo:latest
     expose:
-      - "8000"
+      - "27017"
     ports:
-      - "8000:8000"
-    depends_on:
-      - splitwise-db
+      - "27017:27017"
     networks:
       - splitwise_net
-  splitwise_frontend:
-    container_name: splitwise_frontend
-    build:
-      context: ./splitwise-frontend
-      # dockerfile: ./splitwise-backend/Dockerfile
-    volumes:
-      - ./splitwise-frontend:/usr/src/splitwise-frontend
-    expose:
-      - "3000"
-    ports:
-      - "3000:3000"
-    depends_on:
-      - splitwise_backend
-    networks:
-      - splitwise_net
-  
-  
-  
+  # splitwise_backend:
+  #   container_name: splitwise_backend
+  #   build:
+  #     context: ./splitwise-backend
+  #     # dockerfile: ./splitwise-backend/Dockerfile
+  #   volumes:
+  #     - ./splitwise-backend:/usr/src/splitwise-backend
+  #   expose:
+  #     - "8000"
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - splitwise-db
+  #   networks:
+  #     - splitwise_net
+  # splitwise_frontend:
+  #   container_name: splitwise_frontend
+  #   build:
+  #     context: ./splitwise-frontend
+  #     # dockerfile: ./splitwise-backend/Dockerfile
+  #   volumes:
+  #     - ./splitwise-frontend:/usr/src/splitwise-frontend
+  #   expose:
+  #     - "3000"
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - splitwise_backend
+  #   networks:
+  #     - splitwise_net
+
 networks:
   splitwise_net:
     driver: bridge
